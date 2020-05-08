@@ -18,9 +18,11 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 public class RateLimitter {
 
+    private final Logger logger = Logger.getLogger("logger");
     private final ConcurrentMap<String, RateObj> methodLimits = new ConcurrentHashMap<>();
     private final AtomicInteger requests = new AtomicInteger();
 
@@ -37,15 +39,18 @@ public class RateLimitter {
     }
 
     private void init() {
-        var ctrls = getControllers();
-        for (Class<?> ctrl: ctrls){
-           initController(ctrl);
+        try {
+            var ctrls = getControllers();
+            for (Class<?> ctrl: ctrls){
+                initController(ctrl);
+            }
+        } catch (ClassNotFoundException ex){
+            logger.info("Controller not found");
         }
-
 
     }
 
-    private List<Class<?>> getControllers(){
+    private List<Class<?>> getControllers() throws ClassNotFoundException{
         List<Class<?>> ctrlList = new ArrayList<>();
         ClassPathScanningCandidateComponentProvider scanner =
                 new ClassPathScanningCandidateComponentProvider(true);
@@ -53,7 +58,7 @@ public class RateLimitter {
         scanner.addIncludeFilter(new AnnotationTypeFilter(RestController.class));
 
         for (BeanDefinition bd : scanner.findCandidateComponents(controllerPackage)){
-            ctrlList.add(bd.getClass());
+            ctrlList.add(Class.forName(bd.getBeanClassName()));
         }
 
         return ctrlList;
@@ -67,8 +72,8 @@ public class RateLimitter {
 
         var startPath = "";
         var requestAnnotation = ctrl.getAnnotation(RequestMapping.class);
-        if (requestAnnotation!=null){
-            startPath = requestAnnotation.path()[0];
+        if (requestAnnotation!=null && requestAnnotation.value().length!=0){
+            startPath = requestAnnotation.value()[0];
         }
 
         var methods = ctrl.getMethods();
