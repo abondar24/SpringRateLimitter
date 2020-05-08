@@ -68,6 +68,8 @@ public class RateLimitter {
         var rateAnnotation = ctrl.getAnnotation(RateLimit.class);
         if (rateAnnotation != null) {
             overallLimit = new RateObj(rateAnnotation.requests(), rateAnnotation.period());
+        } else {
+            overallLimit = new RateObj(1000,1L);
         }
 
         var startPath = "";
