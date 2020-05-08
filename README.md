@@ -1,6 +1,8 @@
 ## Spring rate limitter
 
-Small ratelimitting library for rest controllers
+Small rate limitting library for rest controllers.
+
+Idea: you can block your endpoints after some requests for specified period of time
 
 # Usage
 1. Add a depdendency to your maven project
