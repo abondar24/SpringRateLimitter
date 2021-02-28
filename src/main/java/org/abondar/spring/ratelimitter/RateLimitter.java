@@ -35,34 +35,10 @@ public class RateLimitter {
     public RateLimitter (String controllerPackage){
         this.controllerPackage = controllerPackage;
 
-        init();
-    }
-
-    private void init() {
-        try {
-            var ctrls = getControllers();
-            for (Class<?> ctrl: ctrls){
-                initController(ctrl);
-            }
-        } catch (ClassNotFoundException ex){
-            logger.info("Controller not found");
-        }
 
     }
 
-    private List<Class<?>> getControllers() throws ClassNotFoundException{
-        List<Class<?>> ctrlList = new ArrayList<>();
-        ClassPathScanningCandidateComponentProvider scanner =
-                new ClassPathScanningCandidateComponentProvider(true);
 
-        scanner.addIncludeFilter(new AnnotationTypeFilter(RestController.class));
-
-        for (BeanDefinition bd : scanner.findCandidateComponents(controllerPackage)){
-            ctrlList.add(Class.forName(bd.getBeanClassName()));
-        }
-
-        return ctrlList;
-    }
 
     private void initController(Class<?> ctrl){
         var rateAnnotation = ctrl.getAnnotation(RateLimit.class);

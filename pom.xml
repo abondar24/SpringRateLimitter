@@ -90,6 +90,7 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <proc>none</proc>
                 </configuration>
             </plugin>
             <plugin>

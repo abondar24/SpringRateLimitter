@@ -5,10 +5,9 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.concurrent.TimeUnit;
 
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.METHOD,ElementType.TYPE})
 public @interface RateLimit {
 
