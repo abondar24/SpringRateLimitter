@@ -11,7 +11,7 @@ Idea: you can block your endpoints after some requests for specified period of t
          <dependency>
             <groupId>io.github.abondar24</groupId>
             <artifactId>SpringRateLimitter</artifactId>
-            <version>0.0.1</version>
+            <version>0.0.2</version>
          </dependency>
 
 ```
@@ -37,3 +37,8 @@ Defalut values are 1000 requests and 1ms
 ```yaml
 mvn clean install
 ```
+
+# Versions
+
+- 0.0.1 - basic rate limitter
+- 0.0.2 - added check for rate values
