@@ -11,7 +11,7 @@ Idea: you can block your endpoints after some requests for specified period of t
          <dependency>
             <groupId>io.github.abondar24</groupId>
             <artifactId>SpringRateLimitter</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.2-SNAPSHOT</version>
          </dependency>
 
 ```
